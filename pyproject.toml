@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "megasurpresinhas2.0"
+version = "2.0.0"
+description = "Gerador modular de jogos da Mega-Sena e Lotofácil"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["Flask==3.1.2", "requests==2.32.5", "platformdirs==4.5.1"]
+
+[project.optional-dependencies]
+production = ["gunicorn==23.0.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ rules.display_name }} | MegaSurpresinhas 2.0{% endblock %}
+{% block content %}
+<nav class="tabs" aria-label="Modalidades">
+  <a class="{{ 'active' if rules.code.value == 'megasena' else '' }}" href="{{ url_for('web.mega_sena') }}">Mega-Sena</a>
+  <a class="{{ 'active' if rules.code.value == 'lotofacil' else '' }}" href="{{ url_for('web.lotofacil') }}">Lotofácil</a>
+</nav>
+<section class="card hero">
+  <p class="eyebrow">Gerador de jogos</p>
+  <h1>{{ rules.display_name }}</h1>
+  <p>Combine dados recentes com uma chance-base para todas as dezenas. O resultado continua sendo aleatório.</p>
+</section>
+<section class="card">
+  <form method="post" action="{{ url_for('web.generate', lottery_code=rules.code.value) }}">
+    <div class="form-grid">
+      <label>Quantidade de jogos
+        <input name="games" type="number" min="{{ rules.games_min }}" max="{{ rules.games_max }}" value="{{ submitted_games or rules.games_min }}" required>
+        <small>Entre {{ rules.games_min }} e {{ rules.games_max }}</small>
+      </label>
+      <label>Dezenas por jogo
+        <input name="picks" type="number" min="{{ rules.picks_min }}" max="{{ rules.picks_max }}" value="{{ submitted_picks or rules.picks_min }}" required>
+        <small>Entre {{ rules.picks_min }} e {{ rules.picks_max }}</small>
+      </label>
+      <button type="submit">Gerar jogos</button>
+    </div>
+  </form>
+</section>
+{% if error %}<section class="notice error" role="alert">{{ error }}</section>{% endif %}
+{% if result %}
+<section class="card results" id="new-result" data-lottery="{{ rules.code.value }}" data-mode="{{ result.mode }}" data-source="{{ result.source }}" data-games='{{ result.games | tojson }}'>
+  <div class="section-heading"><div><p class="eyebrow">Resultado</p><h2>Seus jogos</h2></div><span class="status">{{ result.mode }}</span></div>
+  <p class="muted">{{ result.message }}</p>
+  <div class="games">
+    {% for game in result.games %}<div class="game" aria-label="Jogo {{ loop.index }}">{% for number in game %}<span>{{ "%02d"|format(number) }}</span>{% endfor %}</div>{% endfor %}
+  </div>
+</section>
+{% endif %}
+<section class="card">
+  <div class="section-heading"><div><p class="eyebrow">Neste dispositivo</p><h2>Histórico</h2></div><button id="clear-history" class="secondary" type="button">Limpar</button></div>
+  <div id="history" data-lottery="{{ rules.code.value }}"><p class="muted">Nenhum jogo salvo.</p></div>
+</section>
+{% endblock %}
