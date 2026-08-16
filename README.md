@@ -78,6 +78,19 @@ A PWA mantém a interface básica disponível no cache. Gerar novos jogos exige 
 - simular indisponibilidade da API e conferir cache/fallback;
 - conferir a página `/offline`.
 
+## Evoluções futuras
+
+Como evolução do projeto, está prevista a possibilidade de incorporar uma interface conversacional com um agente de inteligência artificial.
+
+A proposta é permitir que o agente utilize as funcionalidades existentes da aplicação como ferramentas, mantendo as regras de negócio independentes da camada de IA. Entre as possibilidades estão:
+
+- gerar palpites por meio de interação em linguagem natural;
+- consultar resultados recentes das loterias;
+- utilizar as funcionalidades do domínio como ferramentas do agente;
+- oferecer uma experiência conversacional integrada à interface web.
+
+Essa evolução deverá preservar a arquitetura modular do projeto, mantendo as responsabilidades de domínio, aplicação, infraestrutura e interface desacopladas.
+
 ## Próximos passos de DevOps
 
 Este repositório não inclui CI/CD nem testes automatizados de propósito. Sugestões para prática futura:
