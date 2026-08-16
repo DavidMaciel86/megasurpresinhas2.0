@@ -6,10 +6,19 @@ from .models import LotteryRules
 
 
 class WeightedGameGenerator:
+    """Gera jogos de loteria utilizando pesos baseados em dados históricos."""
+
     def __init__(self, rng=None) -> None:
         self._rng = rng or random.SystemRandom()
 
     def generate(self, rules: LotteryRules, games: int, picks: int, historical_numbers: Sequence[int]) -> list[list[int]]:
+        """
+        Gera jogos ponderando as dezenas pela frequência no histórico informado.
+
+        Valida as regras da loteria e utiliza as frequências históricas como
+        pesos para selecionar dezenas sem repetição em cada jogo.
+        """    
+    
         rules.validate(games, picks)
         if any(not rules.number_min <= number <= rules.number_max for number in historical_numbers):
             raise ValidationError("A fonte de dados retornou dezenas fora da faixa permitida.")
