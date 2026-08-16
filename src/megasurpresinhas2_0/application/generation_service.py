@@ -7,6 +7,13 @@ from megasurpresinhas2_0.domain.models import GenerationResult, LOTTERIES
 
 
 class GenerationService:
+    """
+    Orquestra o caso de uso de geração de jogos.
+
+    Coordena a obtenção dos dados históricos, o uso de cache como contingência
+    e a geração dos jogos conforme as regras da loteria selecionada.
+    """
+    
     def __init__(self, provider: ResultProvider, cache: CacheRepository, generator: WeightedGameGenerator, logger=None) -> None:
         self._provider = provider
         self._cache = cache
@@ -14,6 +21,13 @@ class GenerationService:
         self._logger = logger or logging.getLogger(__name__)
 
     def execute(self, request: GenerateGamesRequest) -> GenerationResult:
+        """
+        Executa a geração de jogos a partir dos parâmetros da requisição.
+    
+        Retorna o resultado com os jogos gerados e informações sobre a origem
+        dos dados utilizados na geração.
+        """
+        
         rules = LOTTERIES[request.lottery]
         rules.validate(request.games, request.picks)
         numbers, mode, source, message = self._resolve_numbers(rules)
