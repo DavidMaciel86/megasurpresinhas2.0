@@ -4,6 +4,19 @@ Aplicação web modular para geração de jogos da Mega-Sena e Lotofácil. Esta 
 
 > Os jogos são aleatórios. Resultados anteriores não alteram a probabilidade matemática de premiação.
 
+## Objetivo do projeto
+
+O MegaSurpresinhas 2.0 também é utilizado como projeto prático de aprendizado e evolução em desenvolvimento de software.
+
+Além das funcionalidades voltadas à geração de jogos, o projeto busca aplicar e aprimorar conceitos como:
+
+- desenvolvimento com Python e Flask;
+- arquitetura modular e separação de responsabilidades;
+- princípios de Clean Architecture;
+- organização e manutenção de código;
+- versionamento com Git e GitHub;
+- práticas de DevOps e evolução contínua do software.
+
 ## Requisitos
 
 - Python 3.11 ou superior
