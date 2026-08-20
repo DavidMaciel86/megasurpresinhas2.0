@@ -1,4 +1,5 @@
 from typing import Protocol
+
 from megasurpresinhas2_0.domain.models import LotteryRules
 
 

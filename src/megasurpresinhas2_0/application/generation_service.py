@@ -1,9 +1,11 @@
 import logging
-from .dto import GenerateGamesRequest
-from .ports import CacheRepository, ResultProvider
+
 from megasurpresinhas2_0.domain.exceptions import ExternalServiceError
 from megasurpresinhas2_0.domain.generator import WeightedGameGenerator
-from megasurpresinhas2_0.domain.models import GenerationResult, LOTTERIES
+from megasurpresinhas2_0.domain.models import LOTTERIES, GenerationResult
+
+from .dto import GenerateGamesRequest
+from .ports import CacheRepository, ResultProvider
 
 
 class GenerationService:

@@ -1,6 +1,7 @@
 import random
 from collections import Counter
 from collections.abc import Sequence
+
 from .exceptions import ValidationError
 from .models import LotteryRules
 

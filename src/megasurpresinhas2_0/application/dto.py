@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from megasurpresinhas2_0.domain.models import LotteryCode
 
 

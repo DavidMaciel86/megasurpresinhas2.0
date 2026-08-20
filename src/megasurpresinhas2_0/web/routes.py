@@ -1,5 +1,14 @@
 import logging
-from flask import Blueprint, current_app, jsonify, render_template, request, send_from_directory
+
+from flask import (
+    Blueprint,
+    current_app,
+    jsonify,
+    render_template,
+    request,
+    send_from_directory,
+)
+
 from megasurpresinhas2_0.application.dto import GenerateGamesRequest
 from megasurpresinhas2_0.domain.exceptions import MegaSurpresinhasError, ValidationError
 from megasurpresinhas2_0.domain.models import LOTTERIES, LotteryCode
