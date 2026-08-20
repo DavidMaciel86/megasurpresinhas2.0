@@ -78,6 +78,19 @@ A PWA mantém a interface básica disponível no cache. Gerar novos jogos exige 
 - simular indisponibilidade da API e conferir cache/fallback;
 - conferir a página `/offline`.
 
+## Integração contínua e qualidade de código
+
+O projeto utiliza **GitHub Actions** para automatizar verificações de qualidade e segurança do código durante o processo de integração contínua (CI).
+
+### Ruff
+
+O **Ruff** é utilizado para análise de qualidade e padronização do código Python. O workflow de CI executa automaticamente a verificação em Pull Requests direcionadas à branch `main`.
+
+Para executar a verificação localmente:
+
+```powershell
+ruff check .
+
 ## Evoluções futuras
 
 Como evolução do projeto, está prevista a possibilidade de incorporar uma interface conversacional com um agente de inteligência artificial.
@@ -93,12 +106,12 @@ Essa evolução deverá preservar a arquitetura modular do projeto, mantendo as 
 
 ## Próximos passos de DevOps
 
-Este repositório não inclui CI/CD nem testes automatizados de propósito. Sugestões para prática futura:
+Com a integração contínua em evolução, os próximos passos previstos para o projeto incluem:
 
-1. adicionar suíte de testes;
-2. configurar lint e checagem de tipos;
-3. criar pipeline no GitHub Actions;
-4. auditar dependências e segredos;
-5. criar imagem Docker;
-6. configurar staging e produção no Render;
-7. adicionar smoke test e rollback.
+1. adicionar suíte de testes automatizados;
+2. adicionar checagem de tipos;
+3. auditar dependências;
+4. criar imagem Docker;
+5. configurar continuous delivery/deployment;
+6. configurar ambientes de staging e produção;
+7. adicionar smoke tests e estratégia de rollback.
