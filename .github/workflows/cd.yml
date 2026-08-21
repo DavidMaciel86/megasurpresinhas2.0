@@ -1,0 +1,44 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  deliver:
+    runs-on: ubuntu-latest  # executa o job em um runner ubuntu
+    
+    steps:
+      - name: checkout do repositório do projeto
+        uses: actions/checkout@v4  #  baixa o repositório para o runner
+        
+      - name: upload dos artefatos de entrega
+        uses: actions/upload-artifact@v4  #  publica os seguintes arquivos como artefatos do workflow
+        with:
+          name: megasurpresinhas-app
+          path: |
+            src/
+            run.py
+            wsgi.py
+            requirements.txt
+            pyproject.toml
+            .env.example
+            README.md
+
+  deploy:
+    runs-on: ubunto-latest
+    needs: deliver # executa somente após o job deliver ser concluído com sucesso
+    
+    steps:
+      - name: download dos artefatos de entrega
+        uses: actions/download-artifact@v4
+        with:
+          name: megasurpresinhas-app
+          
+      - name: simular deploy
+        run: |
+          echo "Artefato recebido com sucesso!"
+          echo "Conteúdo preparado para deploy:"
+          ls -R
+          
