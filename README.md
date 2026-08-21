@@ -90,6 +90,38 @@ Para executar a verificação localmente:
 
 ```powershell
 ruff check .
+```
+
+Para aplicar correções automáticas suportadas pelo Ruff:
+
+```powershell
+ruff check . --fix
+```
+
+Após as correções, execute novamente:
+
+```powershell
+ruff check .
+```
+
+### CodeQL
+
+O projeto utiliza **CodeQL** com o *Default Setup* do GitHub para análise estática de segurança (SAST), auxiliando na identificação de possíveis vulnerabilidades e erros no código Python.
+
+## Continuous Delivery
+
+O projeto utiliza **GitHub Actions** para demonstrar um fluxo de Continuous Delivery após alterações incorporadas à branch `main`.
+
+O workflow é composto por dois jobs:
+
+- `deliver`: realiza o checkout do repositório e publica os arquivos necessários da aplicação como o artefato `megasurpresinhas-app`;
+- `deploy`: depende da conclusão bem-sucedida de `deliver`, recupera o artefato produzido e executa uma simulação da etapa de deploy.
+
+O fluxo atual é:
+
+`push na main → deliver: upload do artefato → deploy: download do artefato → simulação do deploy`
+
+Nesta etapa do projeto, o deploy é **simulado**. A integração com ambientes reais de implantação será tratada em evoluções futuras.
 
 ## Evoluções futuras
 
@@ -106,12 +138,9 @@ Essa evolução deverá preservar a arquitetura modular do projeto, mantendo as 
 
 ## Próximos passos de DevOps
 
-Com a integração contínua em evolução, os próximos passos previstos para o projeto incluem:
+Com os pipelines de CI e CD em evolução, os próximos passos previstos para o projeto incluem:
 
 1. adicionar suíte de testes automatizados;
 2. adicionar checagem de tipos;
 3. auditar dependências;
 4. criar imagem Docker;
-5. configurar continuous delivery/deployment;
-6. configurar ambientes de staging e produção;
-7. adicionar smoke tests e estratégia de rollback.
