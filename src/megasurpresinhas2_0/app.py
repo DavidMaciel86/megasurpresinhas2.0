@@ -1,10 +1,12 @@
 import logging
+
 from flask import Flask
+
+from .application.generation_service import GenerationService
 from .config import Config
 from .domain.generator import WeightedGameGenerator
 from .infrastructure.api_client import GuidiLotteryApiClient
 from .infrastructure.cache_repository import JsonCacheRepository
-from .application.generation_service import GenerationService
 from .web.routes import web
 
 

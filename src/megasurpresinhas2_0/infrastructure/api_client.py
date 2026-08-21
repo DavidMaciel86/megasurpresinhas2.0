@@ -1,5 +1,9 @@
 import requests
-from megasurpresinhas2_0.domain.exceptions import ExternalServiceError, InvalidApiResponseError
+
+from megasurpresinhas2_0.domain.exceptions import (
+    ExternalServiceError,
+    InvalidApiResponseError,
+)
 from megasurpresinhas2_0.domain.models import LotteryRules
 
 
