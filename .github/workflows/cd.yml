@@ -27,7 +27,7 @@ jobs:
             README.md
 
   deploy:
-    runs-on: ubunto-latest
+    runs-on: ubuntu-latest
     needs: deliver # executa somente após o job deliver ser concluído com sucesso
     
     steps:
