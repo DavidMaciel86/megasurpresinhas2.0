@@ -4,41 +4,64 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   deliver:
-    runs-on: ubuntu-latest  # executa o job em um runner ubuntu
-    
+    runs-on: ubuntu-latest
+
     steps:
-      - name: checkout do repositório do projeto
-        uses: actions/checkout@v4  #  baixa o repositório para o runner
-        
-      - name: upload dos artefatos de entrega
-        uses: actions/upload-artifact@v4  #  publica os seguintes arquivos como artefatos do workflow
+      # Baixa o código do repositório para o runner
+      - name: checkout do repositório
+        uses: actions/checkout@v4
+
+      # Constrói a imagem Docker da aplicação
+      - name: build da imagem Docker
+        run: |
+          docker build -t megasurpresinhas2.0:latest .
+
+      # Converte a imagem em um arquivo para transferi-la entre os jobs
+      - name: salva a imagem Docker
+        run: |
+          docker save megasurpresinhas2.0:latest -o megasurpresinhas2.0.tar
+
+      # Publica a imagem salva como artefato do workflow
+      - name: upload da imagem Docker
+        uses: actions/upload-artifact@v4
         with:
-          name: megasurpresinhas-app
-          path: |
-            src/
-            run.py
-            wsgi.py
-            requirements.txt
-            pyproject.toml
-            .env.example
-            README.md
+          name: megasurpresinhas-docker-image
+          path: megasurpresinhas2.0.tar
 
   deploy:
     runs-on: ubuntu-latest
-    needs: deliver # executa somente após o job deliver ser concluído com sucesso
-    
+    needs: deliver
+
     steps:
-      - name: download dos artefatos de entrega
+      # Recupera a imagem construída no job anterior
+      - name: download da imagem Docker
         uses: actions/download-artifact@v4
         with:
-          name: megasurpresinhas-app
-          
-      - name: simular deploy
+          name: megasurpresinhas-docker-image
+
+      # Carrega a imagem no Docker do runner atual
+      - name: carrega a imagem Docker
         run: |
-          echo "Artefato recebido com sucesso!"
-          echo "Conteúdo preparado para deploy:"
-          ls -R
+          docker load -i megasurpresinhas2.0.tar
+
+      # Autentica no Docker Hub usando os secrets do GitHub
+      - name: login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Adiciona a tag correspondente ao repositório remoto
+      - name: cria tag para o Docker Hub
+        run: |
+          docker tag megasurpresinhas2.0:latest \
+            ${{ secrets.DOCKERHUB_USERNAME }}/megasurpresinhas2.0:latest
+
+      # Publica a imagem no Docker Hub
+      - name: publica imagem no Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/megasurpresinhas2.0:latest
           
