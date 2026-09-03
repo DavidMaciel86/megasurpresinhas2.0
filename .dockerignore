@@ -1,0 +1,31 @@
+# Git
+.git
+.github
+.gitignore
+.gitattributes
+
+# Ambientes virtuais
+.venv
+venv
+env
+
+# Python
+__pycache__
+*.py[cod]
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea
+
+# Ruff
+.ruff_cache
+
+# Sistema operacional
+Thumbs.db
+
+# Documentação
+README.md
