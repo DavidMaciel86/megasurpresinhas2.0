@@ -4,8 +4,12 @@ on:
        workflows:
            - "Continuous Integration"
            - "CodeQL"
+
        types:
            - completed
+
+# Princípio do menor privilégio
+permissions: {}
 
 jobs:
     message:
@@ -52,4 +56,3 @@ jobs:
             with:
                 webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
                 content: ":-( CodeQL apresentou falha!"
-                
