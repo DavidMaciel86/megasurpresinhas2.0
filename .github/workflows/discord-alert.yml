@@ -1,0 +1,58 @@
+name: Alerta no Discord
+on:
+   workflow_run:
+       workflows:
+           - "Continuous Integration"
+           - "CodeQL"
+
+       types:
+           - completed
+
+# Princípio do menor privilégio
+permissions: {}
+
+jobs:
+    message:
+        name: Notificar no Discord
+        runs-on: ubuntu-latest
+     
+        
+        steps:
+        
+          # CI - RUFF
+          - name: Aviso CI bem-sucedida
+            if: >
+                ${{ github.event.workflow_run.name == 'Continuous Integration'
+                && github.event.workflow_run.conclusion == 'success' }}
+            uses: tsickert/discord-webhook@v7.0.0
+            with:
+                webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+                content: ";-) CI concluída com sucesso!"
+                 
+          - name: Aviso CI malsucedida
+            if: >
+                 ${{ github.event.workflow_run.name == 'Continuous Integration'
+                 && github.event.workflow_run.conclusion == 'failure' }}
+            uses: tsickert/discord-webhook@v7.0.0
+            with:
+                webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+                content: ":-( A CI apresentou falha!"
+                
+          # CODEQL
+          - name: CodeQL bem-sucedido!
+            if: >
+                ${{ github.event.workflow_run.name == 'CodeQL'
+                && github.event.workflow_run.conclusion == 'success' }}
+            uses: tsickert/discord-webhook@v7.0.0
+            with:
+                webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+                content: ":-) CodeQL concluído com sucesso!"
+                
+          - name: CodeQL malsucedido
+            if: >
+                ${{ github.event.workflow_run.name == 'CodeQL'
+                && github.event.workflow_run.conclusion == 'failure' }}
+            uses: tsickert/discord-webhook@v7.0.0
+            with:
+                webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+                content: ":-( CodeQL apresentou falha!"
