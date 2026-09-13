@@ -31,23 +31,23 @@ Além de gerar jogos, o MegaSurpresinhas 2.0 é um projeto prático de aprendiza
 Os valores abaixo são os limites definidos **nesta aplicação**.
 
 | Modalidade | Faixa das dezenas | Dezenas por jogo | Jogos por geração | Concursos recentes consultados |
-| --- | --- | --- | --- | --- |
-| Mega-Sena | 1 a 60 | 6 a 12 | 1 a 12 | 10 |
-| Lotofácil | 1 a 25 | 15 a 20 | 1 | 3 |
+| ---------- | ----------------- | ---------------- | ----------------- | ------------------------------ |
+| Mega-Sena  | 1 a 60            | 6 a 12           | 1 a 12            | 10                             |
+| Lotofácil  | 1 a 25            | 15 a 20          | 1                 | 3                              |
 
 ## Tecnologias
 
-| Tecnologia | Uso |
-| --- | --- |
-| Python 3.11 ou superior | Linguagem da aplicação |
-| Flask | Rotas HTTP e renderização de templates |
-| Requests | Consulta à API de loterias |
-| platformdirs | Localização do diretório de cache |
-| HTML, CSS e JavaScript | Interface, tema e histórico local |
-| Gunicorn | Servidor WSGI para execução em produção |
-| Docker | Empacotamento e execução em contêiner |
-| GitHub Actions e Ruff | Automação e análise de qualidade |
-| CodeQL | Análise estática de segurança, conforme configuração do GitHub |
+| Tecnologia              | Uso                                                            |
+| ----------------------- | -------------------------------------------------------------- |
+| Python 3.11 ou superior | Linguagem da aplicação                                         |
+| Flask                   | Rotas HTTP e renderização de templates                         |
+| Requests                | Consulta à API de loterias                                     |
+| platformdirs            | Localização do diretório de cache                              |
+| HTML, CSS e JavaScript  | Interface, tema e histórico local                              |
+| Gunicorn                | Servidor WSGI para execução em produção                        |
+| Docker                  | Empacotamento e execução em contêiner                          |
+| GitHub Actions e Ruff   | Automação e análise de qualidade                               |
+| CodeQL                  | Análise estática de segurança, conforme configuração do GitHub |
 
 As dependências estão declaradas em [pyproject.toml](pyproject.toml) e [requirements.txt](requirements.txt).
 
@@ -104,34 +104,33 @@ As configurações são lidas das variáveis de ambiente em [config.py](src/mega
 
 O arquivo [.env.example](.env.example) serve como referência. **Copiar esse arquivo para `.env` não carrega as variáveis automaticamente ao executar `python run.py`.** Defina-as no terminal ou na plataforma de execução. Com Docker, é possível fornecê-las explicitamente por `--env-file`.
 
-| Variável | Padrão | Finalidade |
-| --- | --- | --- |
-| `FLASK_ENV` | `production` | O valor `development` ativa o debug; use apenas localmente |
-| `APP_HOST` | `127.0.0.1` | Endereço do servidor iniciado por `run.py` |
-| `APP_PORT` | `5000` | Porta do servidor iniciado por `run.py` |
-| `APP_LOG_LEVEL` | `INFO` | Nível de registro da aplicação |
-| `LOTTERY_API_BASE_URL` | `https://api.guidi.dev.br/loteria` | Endereço-base do provedor de resultados |
-| `API_CONNECT_TIMEOUT` | `3.05` | Tempo limite de conexão, em segundos |
-| `API_READ_TIMEOUT` | `10` | Tempo limite de leitura, em segundos |
-| `CACHE_DIR` | Diretório de cache do usuário, via platformdirs | Caminho do cache técnico em JSON |
-| `PORT` | `8000` no Docker | Porta utilizada pelo Gunicorn no comando do contêiner |
-
+| Variável               | Padrão                                          | Finalidade                                                 |
+| ---------------------- | ----------------------------------------------- | ---------------------------------------------------------- |
+| `FLASK_ENV`            | `production`                                    | O valor `development` ativa o debug; use apenas localmente |
+| `APP_HOST`             | `127.0.0.1`                                     | Endereço do servidor iniciado por `run.py`                 |
+| `APP_PORT`             | `5000`                                          | Porta do servidor iniciado por `run.py`                    |
+| `APP_LOG_LEVEL`        | `INFO`                                          | Nível de registro da aplicação                             |
+| `LOTTERY_API_BASE_URL` | `https://api.guidi.dev.br/loteria`              | Endereço-base do provedor de resultados                    |
+| `API_CONNECT_TIMEOUT`  | `3.05`                                          | Tempo limite de conexão, em segundos                       |
+| `API_READ_TIMEOUT`     | `10`                                            | Tempo limite de leitura, em segundos                       |
+| `CACHE_DIR`            | Diretório de cache do usuário, via platformdirs | Caminho do cache técnico em JSON                           |
+| `PORT`                 | `8000` no Docker                                | Porta utilizada pelo Gunicorn no comando do contêiner      |
 
 ## Arquitetura
 
 O pacote principal está em [src/megasurpresinhas2_0](src/megasurpresinhas2_0).
 
-| Caminho | Responsabilidade |
-| --- | --- |
-| `domain/` | Regras das modalidades, validação e geração de jogos |
-| `application/` | Caso de uso de geração, DTO e contratos de integração |
-| `infrastructure/` | Cliente HTTP da API e repositório de cache JSON |
-| `web/` | Rotas Flask, templates, CSS, JavaScript e recursos da PWA |
-| `app.py` | Fábrica `create_app()`, composição das dependências e cabeçalhos HTTP |
-| `config.py` | Configurações obtidas do ambiente |
-| `run.py` na raiz | Entrada para execução local |
-| `wsgi.py` na raiz | Entrada WSGI utilizada pelo Gunicorn |
-| `.github/workflows/` | Automações de CI, entrega e alertas |
+| Caminho              | Responsabilidade                                                      |
+| -------------------- | --------------------------------------------------------------------- |
+| `domain/`            | Regras das modalidades, validação e geração de jogos                  |
+| `application/`       | Caso de uso de geração, DTO e contratos de integração                 |
+| `infrastructure/`    | Cliente HTTP da API e repositório de cache JSON                       |
+| `web/`               | Rotas Flask, templates, CSS, JavaScript e recursos da PWA             |
+| `app.py`             | Fábrica `create_app()`, composição das dependências e cabeçalhos HTTP |
+| `config.py`          | Configurações obtidas do ambiente                                     |
+| `run.py` na raiz     | Entrada para execução local                                           |
+| `wsgi.py` na raiz    | Entrada WSGI utilizada pelo Gunicorn                                  |
+| `.github/workflows/` | Automações de CI, entrega e alertas                                   |
 
 O domínio permanece independente de Flask, HTTP e persistência. A camada de aplicação coordena a obtenção dos dados e a geração; a infraestrutura implementa o acesso à API e ao cache.
 
@@ -154,15 +153,15 @@ O modo `fallback` trata a ausência de dados da API/cache; ele não significa ge
 
 ## Rotas principais
 
-| Método | Rota | Finalidade |
-| --- | --- | --- |
-| GET | `/` | Página da Mega-Sena |
-| GET | `/lotofacil` | Página da Lotofácil |
-| POST | `/gerar/megasena` | Geração de jogos da Mega-Sena |
-| POST | `/gerar/lotofacil` | Geração de jogo da Lotofácil |
-| GET | `/health/live` | Retorna `{"status":"ok"}` |
-| GET | `/offline` | Página de indisponibilidade |
-| GET | `/sw.js` | Service worker |
+| Método | Rota               | Finalidade                    |
+| ------ | ------------------ | ----------------------------- |
+| GET    | `/`                | Página da Mega-Sena           |
+| GET    | `/lotofacil`       | Página da Lotofácil           |
+| POST   | `/gerar/megasena`  | Geração de jogos da Mega-Sena |
+| POST   | `/gerar/lotofacil` | Geração de jogo da Lotofácil  |
+| GET    | `/health/live`     | Retorna `{"status":"ok"}`     |
+| GET    | `/offline`         | Página de indisponibilidade   |
+| GET    | `/sw.js`           | Service worker                |
 
 As rotas de geração recebem os campos de formulário `games` e `picks` e retornam HTML. O endpoint de saúde verifica a atividade da aplicação; ele não consulta a API externa.
 
@@ -209,10 +208,10 @@ A análise de segurança com **CodeQL** é descrita no projeto como configurada 
 
 O workflow [cd.yml](.github/workflows/cd.yml) é acionado por pushes na `main` e possui dois jobs:
 
-| Job | Etapas |
-| --- | --- |
+| Job       | Etapas                                                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `deliver` | Faz checkout, constrói a imagem, salva o arquivo `megasurpresinhas2.0.tar` e publica o artefato `megasurpresinhas-docker-image` |
-| `deploy` | Baixa o artefato, carrega a imagem, autentica no Docker Hub e publica `<DOCKERHUB_USERNAME>/megasurpresinhas2.0:latest` |
+| `deploy`  | Baixa o artefato, carrega a imagem, autentica no Docker Hub e publica `<DOCKERHUB_USERNAME>/megasurpresinhas2.0:latest`         |
 
 O pipeline já implementa a publicação da imagem no Docker Hub. **Ainda não há, nesse workflow, uma etapa de implantação da aplicação em um servidor ou plataforma de hospedagem.**
 
@@ -224,11 +223,11 @@ O workflow [discord-alert.yml](.github/workflows/discord-alert.yml) acompanha a 
 
 Configure os valores como secrets do repositório no GitHub:
 
-| Secret | Uso |
-| --- | --- |
+| Secret               | Uso                                                     |
+| -------------------- | ------------------------------------------------------- |
 | `DOCKERHUB_USERNAME` | Usuário do Docker Hub para autenticação e tag da imagem |
-| `DOCKERHUB_TOKEN` | Token utilizado para publicar a imagem |
-| `DISCORD_WEBHOOK` | URL do webhook para os alertas no Discord |
+| `DOCKERHUB_TOKEN`    | Token utilizado para publicar a imagem                  |
+| `DISCORD_WEBHOOK`    | URL do webhook para os alertas no Discord               |
 
 Esses secrets pertencem às automações do GitHub Actions e não são necessários para executar a aplicação localmente. Não inclua seus valores no código ou no README.
 
