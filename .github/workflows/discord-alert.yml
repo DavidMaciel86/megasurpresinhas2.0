@@ -22,7 +22,7 @@ jobs:
           # CI - RUFF
           - name: Aviso CI bem-sucedida
             if: >
-                ${{ github.event.workflow_run.name == 'Continuous Integration'
+                ${{ github.event.workflow_run.path == '.github/workflows/ci.yml'
                 && github.event.workflow_run.conclusion == 'success' }}
             uses: tsickert/discord-webhook@v7.0.0
             with:
@@ -31,7 +31,7 @@ jobs:
                  
           - name: Aviso CI malsucedida
             if: >
-                 ${{ github.event.workflow_run.name == 'Continuous Integration'
+                 ${{ github.event.workflow_run.path == '.github/workflows/ci.yml'
                  && github.event.workflow_run.conclusion == 'failure' }}
             uses: tsickert/discord-webhook@v7.0.0
             with:
@@ -39,18 +39,18 @@ jobs:
                 content: ":-( A CI apresentou falha!"
                 
           # CODEQL
-          - name: CodeQL bem-sucedido!
+          - name: Aviso CodeQL bem-sucedido!
             if: >
-                ${{ github.event.workflow_run.name == 'CodeQL'
+                ${{ github.event.workflow_run.path == 'dynamic/github-code-scanning/codeql'
                 && github.event.workflow_run.conclusion == 'success' }}
             uses: tsickert/discord-webhook@v7.0.0
             with:
                 webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
                 content: ":-) CodeQL concluído com sucesso!"
                 
-          - name: CodeQL malsucedido
+          - name: Aviso CodeQL malsucedido
             if: >
-                ${{ github.event.workflow_run.name == 'CodeQL'
+                ${{ github.event.workflow_run.path == 'dynamic/github-code-scanning/codeql'
                 && github.event.workflow_run.conclusion == 'failure' }}
             uses: tsickert/discord-webhook@v7.0.0
             with:
