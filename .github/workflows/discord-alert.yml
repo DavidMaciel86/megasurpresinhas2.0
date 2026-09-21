@@ -15,11 +15,10 @@ jobs:
     message:
         name: Notificar no Discord
         runs-on: ubuntu-latest
-     
         
         steps:
         
-          # CI - RUFF
+          # CI - RUFF + PYTEST
           - name: Aviso CI bem-sucedida
             if: >
                 ${{ github.event.workflow_run.path == '.github/workflows/ci.yml'
@@ -27,7 +26,7 @@ jobs:
             uses: tsickert/discord-webhook@v7.0.0
             with:
                 webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-                content: ";-) CI concluída com sucesso!"
+                content: ":-) CI concluída com sucesso! Ruff e Pytest passaram."
                  
           - name: Aviso CI malsucedida
             if: >
@@ -36,7 +35,7 @@ jobs:
             uses: tsickert/discord-webhook@v7.0.0
             with:
                 webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-                content: ":-( A CI apresentou falha!"
+                content: ":-( A CI apresentou falha no Ruff ou no Pytest."
                 
           # CODEQL
           - name: Aviso CodeQL bem-sucedido!
