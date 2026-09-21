@@ -8,8 +8,8 @@ permissions:
     contents: read
 
 jobs:
-  lint:
-    name: Code Quality - Ruff
+  lint-and-test:
+    name: Code Quality - Ruff & Pytest
     runs-on: ubuntu-latest
 
     steps:
